@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Tetris</string>
+    <string name="play">Jouer</string>
+    <string name="score">Meilleurs scores</string>
+    <string name="defeat">PERDU</string>
+</resources>
