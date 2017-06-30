@@ -1,9 +1,12 @@
 package com.project.cecib.dawin_project;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     scoreTextView.setText("Score : " + score);
                 }
                 else {
+                    saveScore();
                     pieceManager();
                     gridAdapter.setData(imageItems);
                     gridView.setAdapter(gridAdapter);
@@ -222,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //efface pièce
     private void removePiece(Piece p){
         int my = 0;
         for(int y = p.getPos_y(); y < p.getPos_y()+p.getHeight(); y++ ){
@@ -292,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //baisse toutes les pièces à partir d'une ligne
     public void downAll(int line){
         for (int y = line; y>=1; y--){
             for(int x = 0; x<MAX_X-1; x++){
@@ -300,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //vérification ligne complète
     public void tetris(){
         int nbBlocks;
         for(int y = 0; y<MAX_Y; y++){
@@ -318,23 +325,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //vérification et affichage défaite
     public boolean defeat(Piece p){
         if(p.collisionDown(gridMatrix, MAX_Y,MAX_X)){
             final TextView defeatTextView = (TextView) findViewById(R.id.defeat);
             defeatTextView.setText(R.string.defeat);
             return true;
         }
-
         return false;
     }
 
+    //mise à jour du score selon l'action faite
     public void updateScore(String points){
         switch (points){
             case "piece":{
+                //pièce placée
                 score = score + 100;
                 break;
             }
             case "tetris":{
+                //ligne enlevée
                 score = score + 1000;
                 break;
             }
@@ -358,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //réinitialise le jeu
     public void reloadGame(){
         for(int y = 0; y<MAX_Y; y++){
             for(int x = 0; x<MAX_X; x++){
@@ -372,6 +383,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         defeatTextView.setText("");
     }
 
+    //affichage aperçu de la pièce
     public void preview(){
         ImageView preview = (ImageView) findViewById(R.id.imgPreview);
 
@@ -392,6 +404,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(nextPiece == 6){
             preview.setImageResource(R.drawable.piece_j);
+        }
+    }
+
+    //controle et enregistrement des 3 meilleurs scores
+    public void saveScore(){
+        this.getSharedPreferences("score1",Context.MODE_PRIVATE);
+        this.getSharedPreferences("score2",Context.MODE_PRIVATE);
+        this.getSharedPreferences("score3",Context.MODE_PRIVATE);
+
+
+        SharedPreferences scores = PreferenceManager.getDefaultSharedPreferences(this);
+        int pos = 1;
+        boolean posFind = false;
+        while (pos<=3 && !posFind){
+            if(scores.getInt("score"+pos,0) < score){
+                SharedPreferences.Editor editor = scores.edit();
+                if(pos!=3){
+                    for (int i =3;i>pos;i--){
+                        System.out.println("s"+i+"= "+ scores.getInt("score"+(i-1),0));
+                        editor.putInt("score"+i,scores.getInt("score"+(i-1),0));
+                    }
+                }
+                editor.putInt("score"+pos,score);
+                editor.apply();
+                posFind = true;
+            }
+            else if (scores.getInt("score"+pos,0) == score){
+                posFind = true;
+            }
+            pos = pos +1;
         }
     }
 }

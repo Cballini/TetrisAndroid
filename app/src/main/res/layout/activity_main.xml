@@ -13,9 +13,9 @@
         android:verticalSpacing="1dp"
         android:horizontalSpacing="1dp"
         android:stretchMode="none"
-        android:columnWidth="20dp"
+        android:columnWidth="22dp"
         android:layout_centerInParent="true"
-        android:paddingLeft="40dp"
+        android:paddingLeft="30dp"
         android:paddingTop="20dp">
     </GridView>
 
@@ -24,68 +24,71 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="20dp"
         android:textSize="30dp"
-        android:textColor="@color/colorScore"/>
+        android:textColor="@color/colorScore"
+        android:fontFamily="casual"/>
 
     <TextView
         android:id="@+id/defeat"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="200dp"
+        android:layout_centerInParent="true"
         android:textColor="@color/colorDefeat"
         android:textSize="80dp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/buttonLeft"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
-        android:text="◄" />
+        android:background="@drawable/button_left" />
 
     <Button
         android:id="@+id/buttonDown"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="90dp"
-        android:text="▼"/>
+        android:layout_marginLeft="100dp"
+        android:background="@drawable/button_down"/>
 
     <Button
         android:id="@+id/buttonRight"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="180dp"
-        android:text="►"/>
+        android:layout_marginLeft="190dp"
+        android:background="@drawable/button_right"/>
 
     <Button
         android:id="@+id/buttonRotate"
-        android:layout_width="90dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="270dp"
-        android:text="tourner" />
+        android:layout_marginLeft="280dp"
+        android:background="@drawable/button_rotate" />
 
     <Button
         android:id="@+id/buttonReload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignRight="@id/gridview"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:text="Réinitialiser"/>
+        android:background="@drawable/reload"/>
 
     <ImageView
         android:id="@+id/imgPreview"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignRight="@id/gridview"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="80dp"/>
 
 </RelativeLayout>
 

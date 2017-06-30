@@ -11,4 +11,7 @@
     <color name="colorL">#EBF583</color>
     <color name="colorS">#F8C148</color>
     <color name="colorZ">#F86348</color>
+    <color name="colorFirst">#0070DA</color>
+    <color name="colorSecond">#26AEF8</color>
+    <color name="colorThird">#4BD3F2</color>
 </resources>
