@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int score = 0;
     private int speed = 1000;
     private boolean endGame = false;
+    private MediaPlayer mPlayer =new MediaPlayer();
+
 
 
     @Override
@@ -60,10 +65,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button mClickButtonReload = (Button)findViewById(R.id.buttonReload);
         mClickButtonReload.setOnClickListener(this);
 
+        //ajout musique
+        mPlayer = MediaPlayer.create(this, R.raw.flowloop);
+        mPlayer.setLooping(true);
+        //start musique
+        mPlayer.start();
+
         //descente automatique
         final Handler handler = new Handler();
         final Runnable r = new Runnable() {
             public void run() {
+
                 handler.postDelayed(this, speed);
                 if(!endGame) {
                     removePiece(lastPiece);
@@ -90,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler.postDelayed(r, speed);
     }
 
+    @Override
+    public void onDestroy() {
+        mPlayer.stop();
+        mPlayer.release();
+
+        super.onDestroy();
+
+    }
 
     private void pieceManager() {
         //réinitialisation de la grille
