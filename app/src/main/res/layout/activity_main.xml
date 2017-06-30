@@ -79,6 +79,14 @@
         android:layout_marginRight="10dp"
         android:text="Réinitialiser"/>
 
+    <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignRight="@id/gridview"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp"/>
+
 </RelativeLayout>
 
 

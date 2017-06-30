@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -21,18 +23,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int MAX_X = 9;
     private int MAX_Y = 18;
     private Piece lastPiece = new Piece();
+    private int nextPiece = 0;
     private ArrayList<Bitmap> imageItems = new ArrayList<>();
-    int[][] gridMatrix =new int[MAX_X][MAX_Y];
-    int score = 0;
-    int speed = 1000;
-    boolean endGame = false;
+    private int[][] gridMatrix =new int[MAX_X][MAX_Y];
+    private int score = 0;
+    private int speed = 1000;
+    private boolean endGame = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lastPiece = randomPiece();
+        randomPiece();
+        preview();
         gridView = (GridView) findViewById(R.id.gridview);
         pieceManager();
         gridAdapter = new GridViewAdapter(this,R.layout.grid_item, imageItems);
@@ -114,7 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //vérification ligne complète
             tetris();
             //nouvelle pièce aléatoire
-            lastPiece = randomPiece();
+            randomPiece();
+            preview();
             //vérification fin du jeu
             endGame = defeat(lastPiece);
         }
@@ -157,35 +163,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return color;
     }
 
-    //retourne une pièce aléatoire
-    private Piece randomPiece(){
-        Piece randP = new Piece();
+    //prépare une pièce aléatoire
+    private void randomPiece(){
         int r = new Random().nextInt(7)+1;
 
-        if(r == 1){
-            randP = new Piece_block();
+        if(nextPiece == 0) {
+            if (r == 1) {
+                lastPiece = new Piece_block();
+            } else if (r == 2) {
+                lastPiece = new Piece_I();
+            } else if (r == 3) {
+                lastPiece = new Piece_L();
+            } else if (r == 4) {
+                lastPiece = new Piece_S();
+            } else if (r == 5) {
+                lastPiece = new Piece_Z();
+            } else if (r == 6) {
+                lastPiece = new Piece_J();
+            }
+            r = new Random().nextInt(7)+1;
+            nextPiece = r;
         }
-        else if(r == 2){
-            randP = new Piece_I();
-        }
-        else if(r ==3){
-            randP = new Piece_L();
-        }
-        else if(r ==4){
-            randP = new Piece_S();
-        }
-        else if(r == 5){
-            randP = new Piece_Z();
-        }
-        else if(r == 6){
-            randP = new Piece_J();
+        else {
+            if (nextPiece == 1) {
+                lastPiece = new Piece_block();
+            } else if (nextPiece == 2) {
+                lastPiece = new Piece_I();
+            } else if (nextPiece == 3) {
+                lastPiece = new Piece_L();
+            } else if (nextPiece == 4) {
+                lastPiece = new Piece_S();
+            } else if (nextPiece == 5) {
+                lastPiece = new Piece_Z();
+            } else if (nextPiece == 6) {
+                lastPiece = new Piece_J();
+            }
+            nextPiece = r;
         }
 
         //Position de départ
-        randP.setPos_x(MAX_X/2);
-        randP.setPos_y(0);
-
-        return randP;
+        lastPiece.setPos_x(MAX_X/2);
+        lastPiece.setPos_y(0);
     }
 
     //ajout d'une pièce sur la grille
@@ -347,9 +365,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         score = 0;
-        lastPiece = randomPiece();
+        nextPiece = 0;
+        randomPiece();
         endGame = false;
         final TextView defeatTextView = (TextView) findViewById(R.id.defeat);
         defeatTextView.setText("");
+    }
+
+    public void preview(){
+        ImageView preview = (ImageView) findViewById(R.id.imgPreview);
+
+        if(nextPiece == 1){
+            preview.setImageResource(R.drawable.piece_b);
+        }
+        else if(nextPiece == 2){
+            preview.setImageResource(R.drawable.piece_i);
+        }
+        else if(nextPiece == 3){
+            preview.setImageResource(R.drawable.piece_l);
+        }
+        else if(nextPiece == 4){
+            preview.setImageResource(R.drawable.piece_s);
+        }
+        else if(nextPiece == 5){
+            preview.setImageResource(R.drawable.piece_z);
+        }
+        else if(nextPiece == 6){
+            preview.setImageResource(R.drawable.piece_j);
+        }
     }
 }
